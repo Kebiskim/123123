@@ -1,0 +1,23 @@
+/TicketBuyer_UI
+|-- src/
+|   |-- actions.js 
+|   |-- ticketBuyer.js  // Contains the Puppeteer automation script
+|   |-- utils.js        // Utility functions used by Puppeteer scripts
+|-- ui/
+|   |-- index.css      
+|   |-- index.html      // Main HTML file for the Electron UI
+|   |-- ongoing.css
+|   |-- ongoing.html    
+|   |-- ongoing.js    
+|   |-- options.js      // 
+|   |-- preload.js      // 
+|   |-- renderer.js     // Renderer script for handling UI events and IPC communication
+|   |-- windowManager.js     // Renderer script for handling UI events and IPC communication
+|-- .env                // ★ Environment variables
+|-- .gitignore          // List of the files to be ignored
+|-- config.js           // General configuration file (if needed)
+|-- folStructure.txt    // Folder hierarchy
+|-- main.js             // Main Electron process script
+|-- package.json        // Node.js project configuration
+|-- package-lock.json   // Node.js dependency lock file
+|-- RELEASE_NOTES.md

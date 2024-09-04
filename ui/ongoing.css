@@ -1,0 +1,70 @@
+/* General body styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+    background-color: #f0f0f0; /* Light gray background */
+    overflow: hidden; /* Prevent any page scrolling */
+}
+
+/* Container styling */
+.container {
+    background: #fff; /* White background for the container */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 90%; /* Use 90% of the viewport width */
+    max-width: 500px; /* Maximum width for larger screens */
+    height: auto; /* Auto height to adjust based on content */
+    max-height: 80vh; /* Maximum height to leave some space around */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space evenly */
+    box-sizing: border-box; /* Include padding in width and height */
+}
+
+/* Heading styling */
+.container h2 {
+    text-align: center; /* Center the heading text */
+    font-size: 1.5em; /* Increase font size */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Textarea styling */
+#logArea {
+    width: 100%; /* Full width textarea */
+    height: 300px; /* Set height */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding in width */
+    resize: none; /* Disable resizing */
+    overflow-y: auto; /* Allow vertical scrolling */
+    font-family: monospace; /* Monospaced font for logs */
+    margin-bottom: 20px; /* Space below the textarea */
+}
+
+/* Button container styling */
+.button-container {
+    text-align: center; /* Center-align the button */
+}
+
+/* Stop button styling */
+.stop-button {
+    padding: 10px 20px; /* Button padding */
+    font-size: 16px; /* Font size */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #ff4d4d; /* Red background color */
+    color: white; /* White text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Stop button hover effect */
+.stop-button:hover {
+    background-color: #e60000; /* Darker red on hover */
+}

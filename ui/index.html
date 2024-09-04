@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Prevent zooming by setting user-scalable=no and fixing maximum and minimum scale -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>코레일 티켓 예매 프로그램 By.KebiKim</title>
+    <link rel="stylesheet" href="index.css">
+
+    <script>
+        // Function to resize the window
+        function resizeWindow() {
+            // Set the width and height you want for your window (in pixels)
+            window.resizeTo(320, 580);  
+    
+            // Optional: center the window on screen
+            window.moveTo(
+                (screen.width - window.outerWidth) / 2,
+                (screen.height - window.outerHeight) / 2
+            );
+        }
+    
+        // Call the function when the window loads
+        window.onload = resizeWindow;
+    </script>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="memberNumber">코레일 회원번호:</label>
+            <input type="text" id="memberNumber" placeholder="회원번호 입력">
+        </div>
+        <div class="form-group">
+            <label for="password">코레일 비밀번호:</label>
+            <input type="password" id="password" placeholder="비밀번호 입력">
+        </div>
+        <div class="form-group custom-dropdown">
+            <label for="startLocation">출발지:</label>
+            <input type="text" id="startLocation" placeholder="출발지 선택 또는 입력">
+            <div id="startLocationDropdown" class="dropdown"></div>
+        </div>
+        <div class="form-group custom-dropdown">
+            <label for="endLocation">도착지:</label>
+            <input type="text" id="endLocation" placeholder="도착지 선택 또는 입력">
+            <div id="endLocationDropdown" class="dropdown"></div>
+        </div>
+        <div class="form-group custom-dropdown">
+            <label for="date">출발 일자:</label>
+            <input type="text" id="date" placeholder="출발 일자 선택 또는 입력">
+            <div id="dateOptions" class="dropdown"></div>
+        </div>
+        <div class="form-group custom-dropdown">
+            <label for="time">출발 시간:</label>
+            <input type="text" id="time" placeholder="출발 시간 선택 또는 입력">
+            <div id="timeDropdown" class="dropdown"></div>
+        </div>
+        <div class="button-container">
+            <button id="startAutomationButton">티켓 예매 시작</button>
+        </div>
+    </div>
+    <div id="status"></div>
+
+    <div id="customAlert" class="custom-alert">
+        <div class="custom-alert-content">
+            <span id="customAlertTitle" class="custom-alert-title">Title</span>
+            <p id="customAlertMessage" class="custom-alert-message">Message</p>
+            <button id="customAlertClose" class="custom-alert-close">OK</button>
+        </div>
+    </div>
+    <script src="options.js"></script>
+    <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+# Node modules directory
+node_modules/
+
+# Environment variables file
+.env
+
+# Logs
+*.log
+
+# Package lock file (if you want to ignore it, though it’s often recommended to track this)
+package-lock.json
+
+# Build output
+dist/
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE or editor specific files
+.vscode/
+.idea/
+
+# NPM package distribution files
+*.tgz
+*.zip
+*.tar.gz
+
+# Test coverage directory
+coverage/
+
+# Local configuration files
+*.local
