@@ -9,15 +9,16 @@ let mainWindow;  // Declare `mainWindow` globally to access in IPC events
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 960,
-        height: 800,
+        width: 320,
+        height: 700,
+        resizable: false,
+        maximizable: false,
         webPreferences: {
             // preload: path.resolve(getElectronApp().getAppPath(), 'preload.js'),            
             // preload: path.resolve(app.getAppPath(), 'static', 'preload.js'),
             // preload: path.resolve(__dirname, 'ui/preload.js'),
             // preload: path.resolve('C:/Coding/TickeyBuyer_FuncAdded/ui/preload.js'),
             preload: path.join(__dirname, 'ui', 'preload.js'),  // Correctly joining the path
-
 
             // preload 못 불러오는 이슈 아래 주석을 통해 해결!
             // static 도 안 먹음.. 
@@ -33,7 +34,7 @@ function createWindow() {
     // mainWindow.webContents.openDevTools();
 
     mainWindow.webContents.on('did-finish-load', () => {
-        console.log('App Window loaded.');
+        console.log('[main.js] App Window loaded.');
         mainWindow.webContents.send('log', 'Chrome이 실행되었습니다.');
     });
 

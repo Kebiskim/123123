@@ -68,7 +68,77 @@ async function selectDropdownOption(page, dropdownSelector, optionText, closeSel
       }
     }, { dropdownSelector, optionText });
   }
-  
+
+  async function handleDropdownSelection(page, dropdownSelector, timeValue) {
+    // Mapping time values to the corresponding text labels in the dropdown
+    const timeMap = {
+        "00:00": "오전00시",
+        "01:00": "오전01시",
+        "02:00": "오전02시",
+        "03:00": "오전03시",
+        "04:00": "오전04시",
+        "05:00": "오전05시",
+        "06:00": "오전06시",
+        "07:00": "오전07시",
+        "08:00": "오전08시",
+        "09:00": "오전09시",
+        "10:00": "오전10시",
+        "11:00": "오전11시",
+        "12:00": "오후00시",
+        "13:00": "오후01시",
+        "14:00": "오후02시",
+        "15:00": "오후03시",
+        "16:00": "오후04시",
+        "17:00": "오후05시",
+        "18:00": "오후06시",
+        "19:00": "오후07시",
+        "20:00": "오후08시",
+        "21:00": "오후09시",
+        "22:00": "오후10시",
+        "23:00": "오후11시"
+    };
+
+    const selectedText = timeMap[timeValue];
+
+    if (!selectedText) {
+        console.error('No matching time found for:', timeValue);
+        return;
+    }
+
+    console.log('Selected Text:', selectedText); // Debugging
+
+    // Open the dropdown
+    await page.click(dropdownSelector);
+
+    // Wait for the dropdown options to load
+    await page.waitForSelector(`${dropdownSelector} option`, { timeout: 5000 }); // Increased timeout
+
+    // Select the appropriate option
+    const optionSelected = await page.evaluate((dropdownSelector, selectedText) => {
+        const selectElement = document.querySelector(dropdownSelector);
+        const options = Array.from(selectElement.querySelectorAll('option'));
+        console.log('Options:', options.map(option => option.textContent)); // Debugging
+        const targetOption = options.find(option => option.textContent.includes(selectedText));
+        if (targetOption) {
+            targetOption.selected = true;
+            return true;
+        }
+        return false;
+    }, dropdownSelector, selectedText);
+
+    if (!optionSelected) {
+        console.error('No matching dropdown item found for:', selectedText);
+    } else {
+        // Trigger the change event to reflect the selection
+        await page.evaluate((dropdownSelector) => {
+            const selectElement = document.querySelector(dropdownSelector);
+            const event = new Event('change', { bubbles: true });
+            selectElement.dispatchEvent(event);
+        }, dropdownSelector);
+    }
+}
+
+
 
 // Click a radio button based on its id
 async function clickRadioButtonById(page, id) {
@@ -85,44 +155,11 @@ async function clickRadioButtonById(page, id) {
     }
   }
 
-// Function to log messages to a file with UTC+9 time zone
-// async function logMessage(message) {
-//     // Get the log file path from environment variables
-//     const logFilePath = process.env.LOG_FILE_PATH;
-
-//     if (!logFilePath) {
-//         console.error('LOG_FILE_PATH is not set in the environment variables.');
-//         return;
-//     }
-
-//     // Ensure the directory exists
-//     const dir = path.dirname(logFilePath);
-//     if (!fs.existsSync(dir)) {
-//         fs.mkdirSync(dir, { recursive: true });
-//     }
-
-//     // Get the current date and time adjusted to UTC+9
-//     const date = new Date();
-//     const utcOffset = 9 * 60 * 60 * 1000; // UTC+9 hours in milliseconds
-//     const localDate = new Date(date.getTime() + utcOffset);
-
-//     // Prepare the log message with timestamp
-//     const timestamp = localDate.toISOString().replace('Z', '+09:00'); // Adjust format to include timezone offset
-//     const logMessage = `[${timestamp}] ${message}\n`;
-
-//     // Append the log message to the file
-//     try {
-//         fs.appendFileSync(logFilePath, logMessage, 'utf8');
-//         console.log('Log message written to', logFilePath);
-//     } catch (error) {
-//         console.error('Error writing log message:', error);
-//     }
-// }
-
 module.exports = {
   clickElement,
   clickElementByAlt,
   setInputValue,
   selectDropdownOption,
+  handleDropdownSelection,
   clickRadioButtonById
 };

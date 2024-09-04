@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    height: 100vh; /* Full viewport height */
+    height: 125vh; /* Full viewport height */
     background-color: #f0f0f0; /* Light gray background */
     overflow: hidden; /* Prevent any page scrolling */
 }
@@ -19,12 +19,12 @@ body {
     width: 90%; /* Use 90% of the viewport width */
     max-width: 500px; /* Maximum width for larger screens */
     height: auto; /* Auto height to adjust based on content */
-    max-height: 80vh; /* Maximum height to leave some space around */
+    max-height: 100vh; /* Maximum hei2ght to leave some space around */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Distribute space evenly */
-    box-sizing: border-box; /* Include padding in width and height */
-}
+    box-sizing: border-box; /* Include padding in width and hei2ght */
+}2
 
 /* Heading styling */
 .container h2 {
@@ -36,7 +36,7 @@ body {
 /* Textarea styling */
 #logArea {
     width: 100%; /* Full width textarea */
-    height: 300px; /* Set height */
+    height: 300px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;

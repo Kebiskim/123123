@@ -1,4 +1,4 @@
-console.log('ticketBuyer script loaded');
+console.log('ticketBuyer.js loaded');
 const puppeteer = require('puppeteer');
 const { getMainWindow } = require('../ui/windowManager');
 
@@ -12,7 +12,8 @@ const {
 const { sendMail, logMessage 
 } = require('./utils');
 const { setInputValue, selectDropdownOption, 
-    clickElement, clickRadioButtonById, clickElementByAlt
+    clickElement, clickRadioButtonById, clickElementByAlt,
+    handleDropdownSelection
 } = require('./actions');
 
 // Define the sleep function
@@ -40,21 +41,9 @@ async function waitForMainWindow() {
 
 // Main function for running automation
 async function runAutomation(data) {
-    const { memberNumber, password, startLocation, endLocation, dateId, departureTime } = data;
+    const { memberNumber, password, startLocation, endLocation, date, time } = data;
 
-    // await logMessage('[ticketBuyer.js, runAutomation] Running automation with data:', {
-    //     viewportWidth, 
-    //     viewportHeight, 
-    //     korailUrl, 
-    //     memberNumber, 
-    //     password, 
-    //     startLocation, 
-    //     endLocation, 
-    //     dateId, 
-    //     departureTime, 
-    //     maxRetries, 
-    //     emailTo
-    // });
+    console.log('[runAutomation] Data received:', data); // Log data to verify
 
     let browser;
     let page;
@@ -64,7 +53,7 @@ async function runAutomation(data) {
         const mainWindow = await waitForMainWindow();
         mainWindow.webContents.send('log', '코레일 예약 작업을 시작합니다.');
 
-        browser = await puppeteer.launch({ headless: false });
+        browser = await puppeteer.launch({ headless: true });
         page = await browser.newPage();
 
         // Set viewport size
@@ -84,6 +73,7 @@ async function runAutomation(data) {
         mainWindow.webContents.send('log', '로그인 성공');
 
         await page.goto('https://www.letskorail.com/ebizprd/prdMain.do'); 
+        await logMessage('Moved to main page');
 
         // Set start and end locations
         await setInputValue(page, '#txtGoStart', startLocation);
@@ -92,27 +82,30 @@ async function runAutomation(data) {
 
         // Click calendar popup
         await clickElement(page, '[title="달력 팝업창이 뜹니다."]');
+        await logMessage('Clicked calendar popup');
 
         // Select the date on popup
         const pages = await browser.pages();
         const popupPage = pages[pages.length - 1];
         
         // dateId를 dYYYYMMDD 형식으로 변환
-        const formattedDateId = `d${dateId.replace(/-/g, '')}`;
+        const formattedDateId = `d${date.replace(/-/g, '')}`;
+        await logMessage('formattedDateId: ' + formattedDateId);
         
         await popupPage.waitForSelector(`#${formattedDateId}`);
         await popupPage.click(`#${formattedDateId}`);
 
-        await logMessage('Date selected: ' + dateId);
-        mainWindow.webContents.send('log', '날짜 입력 성공' + dateId);
+        await logMessage('Date selected: ' + date);
+        mainWindow.webContents.send('log', '날짜 입력 성공: ' + date);
 
         await page.bringToFront();
         await logMessage('Moved to main page');
 
         // Select departure time and train type
-        await selectDropdownOption(page, '[title="출발일시:시"]', departureTime);
-        await logMessage('Selected Departure Time: ' + departureTime);
-        mainWindow.webContents.send('log', '출발시간: ' + departureTime);
+        // await selectDropdownOption(page, '[title="출발일시:시"]', departureTime);
+        await handleDropdownSelection(page, '[title="출발일시:시"]', time);
+        await logMessage('Selected Departure Time: ' + time);
+        mainWindow.webContents.send('log', '출발시간: ' + time);
 
         // Click search button
         await clickElement(page, '[alt="승차권예매"]');
@@ -163,7 +156,6 @@ async function runAutomation(data) {
                                 }, 60000);
                                 // ★ TEST
                                 img.click();
-                                mainWindow.webContents.send('log', '티켓 구매가 완료되었습니다.');
                             }
                         }
                     }, row);
@@ -175,6 +167,7 @@ async function runAutomation(data) {
 
             if (imageClicked) {
                 await logMessage('티켓 예매 성공');
+                mainWindow.webContents.send('log', '티켓 구매가 완료되었습니다.');
                 // ★ TEST
                 await sendMail(
                     emailTo,
@@ -190,7 +183,7 @@ async function runAutomation(data) {
             find_retryCnt += 1;
         }
     } catch (error) {
-        await logMessage('Error during automation: ' + error.message);
+        await logMessage('[ticketBuyer.js] Error during automation: ' + error.message);
     } finally {
         if (browser) {
             await browser.close();

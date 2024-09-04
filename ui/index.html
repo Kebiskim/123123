@@ -10,8 +10,7 @@
     <script>
         // Function to resize the window
         function resizeWindow() {
-            // Set the width and height you want for your window (in pixels)
-            window.resizeTo(320, 580);  
+            window.resizeTo(320, 700);  
     
             // Optional: center the window on screen
             window.moveTo(
@@ -34,6 +33,7 @@
         <div class="form-group">
             <label for="password">코레일 비밀번호:</label>
             <input type="password" id="password" placeholder="비밀번호 입력">
+            <div id="capsLockWarning" class="caps-lock-warning" style="display: none; color: blue;">CAPS LOCK이 켜져 있습니다.</div>
         </div>
         <div class="form-group custom-dropdown">
             <label for="startLocation">출발지:</label>
@@ -68,6 +68,7 @@
             <button id="customAlertClose" class="custom-alert-close">OK</button>
         </div>
     </div>
+  
     <script src="options.js"></script>
     <script src="renderer.js"></script>
 </body>

@@ -115,19 +115,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * Populates a time dropdown with times from 오전00 to 오후11.
-     * @param {HTMLElement} dropdownElement - The dropdown container element.
-     */
     function populateTimeDropdown(dropdownElement) {
         const times = [];
+        
+        // Generate time slots from 00:00 to 23:00
         for (let i = 0; i < 24; i++) {
-            const period = i < 12 ? '오전' : '오후';
-            const hour = i % 12 === 0 ? '12' : (i % 12).toString().padStart(2, '0');
-            times.push(`${period}${hour}`); // Format time as 오전00, 오후01, etc.
+            const hour = i.toString().padStart(2, '0'); // Ensure hour is always 2 digits
+            const time = `${hour}:00`; // Format time as HH:00
+            times.push(time);
         }
-
+    
         dropdownElement.innerHTML = ''; // Clear existing options
+        
+        // Create and append each time option to the dropdown
         times.forEach(time => {
             const div = document.createElement('div');
             div.classList.add('dropdown-item');
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdownElement.appendChild(div);
         });
     }
-
+    
         /**
          * Filters time dropdown items based on the input value.
     * @param {HTMLElement} inputElement - The input field element.
