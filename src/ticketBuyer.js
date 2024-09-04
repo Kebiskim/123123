@@ -53,7 +53,8 @@ async function runAutomation(data) {
         const mainWindow = await waitForMainWindow();
         mainWindow.webContents.send('log', '코레일 예약 작업을 시작합니다.');
 
-        browser = await puppeteer.launch({ headless: true });
+        // ★ TEST
+        browser = await puppeteer.launch({ headless: false });
         page = await browser.newPage();
 
         // Set viewport size

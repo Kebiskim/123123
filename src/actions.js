@@ -72,32 +72,33 @@ async function selectDropdownOption(page, dropdownSelector, optionText, closeSel
   async function handleDropdownSelection(page, dropdownSelector, timeValue) {
     // Mapping time values to the corresponding text labels in the dropdown
     const timeMap = {
-        "00:00": "오전00시",
-        "01:00": "오전01시",
-        "02:00": "오전02시",
-        "03:00": "오전03시",
-        "04:00": "오전04시",
-        "05:00": "오전05시",
-        "06:00": "오전06시",
-        "07:00": "오전07시",
-        "08:00": "오전08시",
-        "09:00": "오전09시",
-        "10:00": "오전10시",
-        "11:00": "오전11시",
-        "12:00": "오후00시",
-        "13:00": "오후01시",
-        "14:00": "오후02시",
-        "15:00": "오후03시",
-        "16:00": "오후04시",
-        "17:00": "오후05시",
-        "18:00": "오후06시",
-        "19:00": "오후07시",
-        "20:00": "오후08시",
-        "21:00": "오후09시",
-        "22:00": "오후10시",
-        "23:00": "오후11시"
+        "00:00": "오전00",
+        "01:00": "오전01",
+        "02:00": "오전02",
+        "03:00": "오전03",
+        "04:00": "오전04",
+        "05:00": "오전05",
+        "06:00": "오전06",
+        "07:00": "오전07",
+        "08:00": "오전08",
+        "09:00": "오전09",
+        "10:00": "오전10",
+        "11:00": "오전11",
+        "12:00": "오후00",
+        "13:00": "오후01",
+        "14:00": "오후02",
+        "15:00": "오후03",
+        "16:00": "오후04",
+        "17:00": "오후05",
+        "18:00": "오후06",
+        "19:00": "오후07",
+        "20:00": "오후08",
+        "21:00": "오후09",
+        "22:00": "오후10",
+        "23:00": "오후11"
     };
 
+    // Get the text that corresponds to the selected time value
     const selectedText = timeMap[timeValue];
 
     if (!selectedText) {
@@ -105,7 +106,7 @@ async function selectDropdownOption(page, dropdownSelector, optionText, closeSel
         return;
     }
 
-    console.log('Selected Text:', selectedText); // Debugging
+    console.log('[actions.js] Selected Text:', selectedText); // Debugging
 
     // Open the dropdown
     await page.click(dropdownSelector);

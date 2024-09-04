@@ -28,7 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     showAlert('입력 오류', '날짜 형식이 올바르지 않습니다. [ ex) 2024-01-01 ]');
                     return; // Exit function if date format is invalid
                 }
-
+                // Regular expression for time format HH:MM
+                const timePattern = /^\d{2}:\d{2}$/; 
+                // Check if the time format is valid
+                if (!timePattern.test(timeElem)) {
+                    showAlert('입력 오류', '시간 형식이 올바르지 않습니다. [ ex) 14:00 ]');
+                    return; // Exit function if time format is invalid
+                }
+                
                 const encoder = new TextEncoder();
                 const data = {
                     memberNumber: memberNumberElem,
